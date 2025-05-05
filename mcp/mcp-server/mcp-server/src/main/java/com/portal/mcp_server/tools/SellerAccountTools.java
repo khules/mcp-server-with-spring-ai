@@ -16,6 +16,11 @@ public class SellerAccountTools {
         this.sellerAccountRepository = sellerAccountRepository;
     }
 
+    /**
+     * Search all seller accounts by name
+     * @param name Seller Account Name
+     * @return List of Seller Accounts
+     */
     @Tool(name = "Search Seller account by name", description = "Find all Seller Accounts by name")
     public String getAccountByName(
             @ToolParam(description = "Seller Account Name") String name) {
@@ -27,7 +32,12 @@ public class SellerAccountTools {
         return result.toString();
     }
 
-    @Tool(description = "Find all Seller Accounts by owner")
+    /**
+     * Search all seller accounts by owner
+     * @param name Seller account owner
+     * @return List of Seller Accounts
+     */
+    @Tool(name = "Search all Seller account by owner", description = "Find all Seller Accounts by owner")
     public String getAccountByOwner(
             @ToolParam(description = "Seller Account owner") String owner) {
         List<SellerAccount> accountList = sellerAccountRepository.findByOwner(owner);
