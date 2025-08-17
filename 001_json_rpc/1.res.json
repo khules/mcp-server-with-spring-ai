@@ -1,0 +1,21 @@
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": [
+    {
+      "id": 59,
+      "appointment_type_id": [53, "AMDD 1684 Passenger 1"],
+      "weekday": "Sunday",
+      "start_hour": 22.0,
+      "end_hour": 0.0,
+      "start_datetime": "2025-08-10 22:04:40",
+      "end_datetime": "2025-08-10 23:04:40",
+      "duration": 1.0,
+      "display_name": "appointement.slots,59",
+      "create_uid": [2, "Administrator"],
+      "create_date": "2025-08-10 20:34:00",
+      "write_uid": [2, "Administrator"],
+      "write_date": "2025-08-10 20:40:07"
+    }
+  ]
+}

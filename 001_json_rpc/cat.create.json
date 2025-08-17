@@ -1,0 +1,22 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "appointees.category",
+      "create",
+      [
+        {
+          "name": "SA TRIP LM44SZGP",
+          "appointees": [18]
+        }
+      ]
+    ]
+  },
+  "id": 123
+}

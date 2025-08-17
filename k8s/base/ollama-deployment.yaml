@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama-deployment
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      # For GPU acceleration, you would add node selectors and tolerations here
+      # to schedule this pod on a GPU-enabled node.
+      containers:
+        - name: ollama
+          # IMPORTANT: Replace with your actual image path from your container registry.
+          image: khulesa/ollama:0.0.1
+          ports:
+            - containerPort: 11434
+          resources:
+              requests:
+                memory: "4Gi" # The amount of memory the pod asks for
+                cpu: "1000m"  # You may also need to adjust CPU
+              limits:
+                memory: "4Gi" # The maximum memory the pod can use
+                cpu: "2000m"

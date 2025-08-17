@@ -1,0 +1,6 @@
+{
+  "messaging_product": "whatsapp",
+  "to": "27842617274",
+  "type": "template",
+  "template": { "name": "hello_world", "language": { "code": "en_US" } }
+}

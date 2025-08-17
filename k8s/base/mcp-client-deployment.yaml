@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-client-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mcp-client
+  template:
+    metadata:
+      labels:
+        app: mcp-client
+    spec:
+      containers:
+        - name: mcp-client
+          image: mcp-client:0.0.1
+          ports:
+            - containerPort: 8100
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "client"
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:/config/application.yml"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: gcp-volume
+              mountPath: /mcp
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mcp-config
+        - name: gcp-volume
+          configMap:
+            name: gcp-creds

@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namespace: icu-erp
+
+images:
+  - name: mcp-client
+    newName: khulesa/mcp-client
+    newTag: 0.0.9
+  # - name: your-registry/mcp-server
+  #   newName: khulesa/mcp-server # <-- Replace with your actual image
+  # - name: your-registry/mcp-ollama-phi3
+  #   newName: khulesa/mcp-ollama-phi3 # <-- Replace with your actual image
+
+patches:
+  - path: service-type-patch.yaml

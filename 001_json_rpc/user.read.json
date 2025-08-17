@@ -1,0 +1,10 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": ["ridealong", "2", "ODOO@jik008", "res.partner", "read", [33]]
+  },
+  "id": 123
+}

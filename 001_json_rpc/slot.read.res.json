@@ -1,0 +1,21 @@
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": [
+    {
+      "id": 43,
+      "appointment_type_id": [6, "Passenger Two"],
+      "weekday": "Monday",
+      "start_hour": 10.0,
+      "end_hour": 11.0,
+      "start_datetime": false,
+      "end_datetime": false,
+      "duration": 0.0,
+      "display_name": "appointement.slots,43",
+      "create_uid": [2, "Administrator"],
+      "create_date": "2025-08-09 13:53:34",
+      "write_uid": [2, "Administrator"],
+      "write_date": "2025-08-09 13:55:38"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "details": {
+    "origin": "Johannesburg",
+    "destination": "Cape Town",
+    "date": "2025-08-12 22:25:40",
+    "numberOfPassengers": 1,
+    "price": 150.0
+  },
+  "vehicle": {
+    "licensePlate": "CDS 64588"
+  },
+  "driver": {
+    "name": "Jane Smith",
+    "contact": "07987657321"
+  }
+}

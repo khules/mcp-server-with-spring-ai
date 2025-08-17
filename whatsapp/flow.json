@@ -1,0 +1,27 @@
+{
+  "recipient_type": "individual",
+  "messaging_product": "whatsapp",
+  "to": "27844988332",
+  "type": "interactive",
+  "interactive": {
+    "type": "flow",
+    "body": {
+      "text": "Fill in the form"
+    },
+    "footer": {
+      "text": "IBiznis"
+    },
+    "action": {
+      "name": "flow",
+      "parameters": {
+        "flow_message_version": "3",
+        "flow_id": "1820568505526629",
+        "flow_cta": "Adverties",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "TRIP_FORM"
+        }
+      }
+    }
+  }
+}

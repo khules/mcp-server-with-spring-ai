@@ -1,0 +1,9 @@
+/mcp/mcp-server/mcp-server/target
+/mcp/mcp-client/mcp-client/target
+/mcp/mcp-core/.mvn
+/mcp/mcp-server/mcp-server/src/main/java/com/portal/mcp_server/service.zip
+/mcp/application_default_credentials.json/c:/workspaces/ai/mcp-server-with-spring-ai/mcp/mcp-core/mvnw.cmd
+/mcp/mcp-core/.gitignore
+/001_json_rpc/-X
+/.vscode
+mcp/application_default_credentials.json

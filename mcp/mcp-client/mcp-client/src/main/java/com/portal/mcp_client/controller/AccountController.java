@@ -12,12 +12,10 @@ public class AccountController {
 
     private final ChatClient chatClient;
 
-
     public AccountController(ChatClient.Builder chat, ToolCallbackProvider toolCallbackProvider) {
-        this.chatClient = chat.defaultTools(toolCallbackProvider)
+        this.chatClient = chat.defaultToolCallbacks(toolCallbackProvider)
                 .build();
     }
-
 
     @GetMapping("/account")
     public String getAccount(@RequestParam("q") String name) {

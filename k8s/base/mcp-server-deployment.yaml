@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mcp-server
+  template:
+    metadata:
+      labels:
+        app: mcp-server
+    spec:
+      containers:
+        - name: mcp-server
+          # IMPORTANT: Replace with your actual image path from your container registry.
+          image: khulesa/mcp-server:0.2.0
+          ports:
+            - containerPort: 8060
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "server"
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:/config/application.yml"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://odoo-erp-postgres:5433/mydatabase"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "myuser"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "Auto@123"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mcp-config

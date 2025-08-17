@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/mydatabase
+    url: jdbc:postgresql://localhost:5532/mydatabase
     username: myuser
     password: Auto@123
     driver-class-name: org.postgresql.Driver
@@ -25,8 +25,12 @@ spring:
         stdio:
           enabled: false
         sse-message-endpoint: /mcp/message
-
+        capailities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
 
 logging.level.org.springframework.ai: DEBUG
 
-server.port: 8060
+server.port: 8160

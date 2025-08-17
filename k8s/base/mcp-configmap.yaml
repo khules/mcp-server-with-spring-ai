@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mcp-config
+data:
+  application.yml: |
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: client
+      ai:
+        mcp:
+          client:
+            sse:
+              transport-mode: WEBFLUX
+              connections:
+                account-mcp-server:
+                  url: http://mcp-server-service:8060
+            type: SYNC
+            request-timeout: 30s
+        vertex:
+          ai:
+            gemini:
+              project-id: 172464863775
+              location: us-central1
+              credentialsUri: file:///mcp/application_default_credentials.json
+              chat:
+                options:
+                  model: gemini-2.5-pro
+    server:
+      port: 8040
+    # ===================================================================
+    # HTTP Traffic Logging
+    # ===================================================================
+    logging:
+      level:
+        org:
+          springframework:
+            web: DEBUG
+          apache:
+            http: TRACE
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: server
+      datasource:
+        url: jdbc:postgresql://odoo-erp-postgres:5433/mydatabase
+        username: myuser
+        password: Auto@123
+        driver-class-name: org.postgresql.Driver
+      jpa:
+        hibernate:
+          ddl-auto: none
+        show-sql: true
+        properties:
+          hibernate:
+            format_sql: true
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+      liquibase:
+        change-log: classpath:db/changelog/changelog-master.xml
+      ai:
+        mcp:
+          server:
+            name: account-mcp-server
+            version: 1.0.0
+            type: SYNC
+            stdio:
+              enabled: false
+            sse-message-endpoint: /mcp/messages
+    spring.jpa.properties.hibernate.format_sql: true
+    logging.level.org.springframework.ai: TRACE
+    logging.level.org.hibernate.SQL: DEBUG
+    logging.level.org.hibernate.orm.jdbc.bind: TRACE
+    logging.level.org.zalando.logbook: TRACE
+    server.port: 8060

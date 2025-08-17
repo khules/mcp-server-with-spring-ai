@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5532/mydatabase
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+
+  ai:
+    mcp:
+      server:
+        name: account-mcp-server
+        version: 1.0.0
+        type: SYNC
+        stdio:
+          enabled: false
+        sse-message-endpoint: /mcp/message
+
+logging.level.org.springframework.ai: DEBUG
+logging.level.com.zaxxer.hikari: DEBUG
+
+server.port: 8090

@@ -1,0 +1,47 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "***",
+      "res.users",
+      "create",
+      [
+        {
+          "login": "0790857968@mail.com",
+          "password": "0790857968",
+          "new_password": "0790857968",
+          "active": true,
+          "active_partner": true,
+          "share": true,
+          "companies_count": 1,
+          "company_ids": [1],
+          "name": "LM44SZGP",
+          "email": "0790857968@mail.com",
+          "notification_type": "email",
+          "state": "new",
+          "type": "contact",
+          "phone": false,
+          "mobile": false,
+          "is_company": false,
+          "is_public": true,
+          "groups_id": [11, 16],
+          "company_type": "person",
+          "partner_share": true,
+          "trust": "normal",
+          "degree": "trip",
+          "work_exp": "5",
+          "weekday": false,
+          "start_hour": 0.0,
+          "end_hour": 0.0,
+          "appoi_charge": 250.0
+        }
+      ]
+    ]
+  },
+  "id": 123
+}

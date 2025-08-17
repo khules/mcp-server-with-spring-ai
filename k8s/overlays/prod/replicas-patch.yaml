@@ -1,0 +1,15 @@
+# Set replica count for mcp-server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-server-deployment
+spec:
+  replicas: 2
+---
+# Set replica count for mcp-client
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-client-deployment
+spec:
+  replicas: 3

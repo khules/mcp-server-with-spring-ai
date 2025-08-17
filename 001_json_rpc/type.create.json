@@ -1,0 +1,22 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "appointement.type",
+      "create",
+      [
+        {
+          "name": "Passenger Three",
+          "staff_user_ids": [12]
+        }
+      ]
+    ]
+  },
+  "id": 123
+}

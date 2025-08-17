@@ -1,0 +1,20 @@
+
+services:
+
+  mcp-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-client:0.0.9
+    container_name: mcp_client_app
+    ports:
+      - "8040:8040"
+    environment:
+      - SPRING_AI_OLLAMA_CHAT_BASE_URL=http://ollama:11434
+      - SPRING_AI_MCP_CLIENT_SSE_URL=http://mcp-server:8090/mcpq
+    networks:
+      - mcpai
+
+networks:
+  mcpai:
+    external: true

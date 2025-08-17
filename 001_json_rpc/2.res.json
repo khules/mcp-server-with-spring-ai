@@ -1,0 +1,19 @@
+{
+   "messaging_product": "whatsapp",
+   "recipient_type": "individual",
+   "to": "+27844988332",
+   "type": "interactive",
+   "interactive": {
+     "type": "product",
+     "body": {
+       "text": "optional body text"
+     },
+     "footer": {
+       "text": "optional footer text"
+     },
+     "action": {
+       "catalog_id": "CATALOG_ID",
+       "product_retailer_id": "ID_TEST_ITEM_1"
+     }
+   }
+ }

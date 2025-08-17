@@ -1,0 +1,28 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "appointement.slots",
+      "create",
+      [
+        {
+          "id": 43,
+          "appointment_type_id": [6, "Passenger Two"],
+          "weekday": "Monday",
+          "start_hour": 10.0,
+          "end_hour": 11.0,
+          "start_datetime": false,
+          "end_datetime": false,
+          "duration": 0.0
+        }
+      ]
+    ]
+  },
+  "id": 123
+}

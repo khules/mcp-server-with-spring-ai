@@ -1,0 +1,55 @@
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: mcp_postgres_db
+    environment:
+      POSTGRES_DB: mcp_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mcp_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    build:
+      context: ./ollama
+    container_name: mcp_ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+  mcp-server:
+    build:
+      context: ./mcp/mcp-server/mcp-server
+      dockerfile: Dockerfile
+    container_name: mcp_server_app
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mcp_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_LIQUIBASE_ENABLED=true
+    depends_on:
+      db:
+        condition: service_healthy
+  mcp-client:
+    build:
+      context: ./mcp/mcp-client/mcp-client
+      dockerfile: Dockerfile
+    container_name: mcp_client_app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_AI_OLLAMA_CHAT_BASE_URL=http://ollama:11434
+      - SPRING_AI_MCP_CLIENT_SSE_URL=http://mcp-server:8090/mcpq
+volumes:
+  postgres_data:
+  ollama_data:

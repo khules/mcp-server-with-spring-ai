@@ -1,0 +1,21 @@
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "appointees.category",
+      "write",
+      [5],
+      {
+        "origin": "Johannesburg",
+        "destination": "Cape Town"
+      }
+    ]
+  },
+  "id": 123
+}

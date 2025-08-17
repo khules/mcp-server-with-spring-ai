@@ -10,9 +10,15 @@ services:
       POSTGRES_PASSWORD: Auto@123
       POSTGRES_DB: mydatabase
     ports:
-      - "5432:5432"
+      - "5532:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mcpai
+
+networks:
+  mcpai:
+    external: true
 
 volumes:
   postgres_data:

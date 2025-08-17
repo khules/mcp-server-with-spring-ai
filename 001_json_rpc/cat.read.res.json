@@ -1,0 +1,17 @@
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": [
+    {
+      "id": 4,
+      "name": "SA Trip",
+      "appointees": [13],
+      "company_id": [1, "Ride Along"],
+      "display_name": "SA Trip",
+      "create_uid": [2, "Administrator"],
+      "create_date": "2025-08-09 13:30:48",
+      "write_uid": [2, "Administrator"],
+      "write_date": "2025-08-09 13:52:21"
+    }
+  ]
+}

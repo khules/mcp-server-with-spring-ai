@@ -1,5 +1,6 @@
 package com.portal.mcp_server;
 
+import com.portal.mcp_server.tools.McpTool;
 import com.portal.mcp_server.tools.SellerAccountTools;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
@@ -15,9 +16,9 @@ public class McpServerApplication {
 	}
 
 	@Bean
-	public ToolCallbackProvider tools(SellerAccountTools sellerAccountTools) {
+	public ToolCallbackProvider tools(McpTool... tools) {
 		return MethodToolCallbackProvider.builder()
-				.toolObjects(sellerAccountTools)
+				.toolObjects(tools)
 				.build();
 	}
 }

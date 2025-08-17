@@ -1,0 +1,36 @@
+spring:
+  ai:
+    mcp:
+      client:
+        sse:
+          transport-mode: WEBFLUX
+          connections:
+            account-mcp-server:
+              url: http://a35531458b52b46a2b9dd395c3497980-1396126055.us-east-1.elb.amazonaws.com:8059
+              # url: http://localhost:8160
+        type: SYNC
+        request-timeout: 30s
+    # ollama:
+    #   chat:
+    #     options:
+    #       model: llama3.2:3b
+    #     model: llama3.2
+    #   base-url: http://localhost:11434
+    vertex:
+      ai:
+        gemini:
+          project-id: 172464863775
+          location: us-central1
+          credentialsUri: file:///C:/workspaces/ai/mcp-server-with-spring-ai/mcp/application_default_credentials.json
+          chat:
+            options:
+              model: gemini-2.5-pro
+
+server:
+  port: 8040
+
+# ===================================================================
+# HTTP Traffic Logging
+# ===================================================================
+
+logging.level.org.springframework.web.reactive.function.client: TRACE

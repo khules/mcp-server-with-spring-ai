@@ -1,0 +1,44 @@
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "27844988332",
+  "type": "interactive",
+  "interactive": {
+    "type": "list",
+    "header": {
+      "type": "text",
+      "text": "Choose an option"
+    },
+    "body": {
+      "text": "Select from the list below to get more information about our services."
+    },
+    "footer": {
+      "text": "Powered by MyBusiness"
+    },
+    "action": {
+      "button": "View Options",
+      "sections": [
+        {
+          "title": "Service Categories",
+          "rows": [
+            {
+              "id": "Service Categories 1",
+              "title": "Website Design",
+              "description": "Get a custom website tailored to your needs."
+            },
+            {
+              "id": "Service Categories 2",
+              "title": "SEO Services",
+              "description": "Improve your visibility on search engines."
+            },
+            {
+              "id": "Service Categories 3",
+              "title": "Social Media Management",
+              "description": "Engage with your audience on social platforms."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
