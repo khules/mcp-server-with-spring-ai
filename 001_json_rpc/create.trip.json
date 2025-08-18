@@ -1,0 +1,16 @@
+{
+  "details": {
+    "origin": "Durban",
+    "destination": "Cape Town",
+    "date": "2025-08-17 20:38",
+    "numberOfPassengers": 3,
+    "price": 750.5
+  },
+  "vehicle": {
+    "licensePlate": "GP-123-XYZ"
+  },
+  "driver": {
+    "name": "Larry Hover",
+    "contact": "0821234568"
+  }
+}

@@ -1,19 +1,23 @@
 {
-   "messaging_product": "whatsapp",
-   "recipient_type": "individual",
-   "to": "+27844988332",
-   "type": "interactive",
-   "interactive": {
-     "type": "product",
-     "body": {
-       "text": "optional body text"
-     },
-     "footer": {
-       "text": "optional footer text"
-     },
-     "action": {
-       "catalog_id": "CATALOG_ID",
-       "product_retailer_id": "ID_TEST_ITEM_1"
-     }
-   }
- }
+  "jsonrpc": "2.0",
+  "method": "call",
+  "params": {
+    "service": "object",
+    "method": "execute",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "appointees.category",
+      "search_read",
+      [
+        [
+          ["origin", "=", "Johannesburg"],
+          ["destination", "=", "Cape Town"]
+        ]
+      ],
+      {}
+    ]
+  },
+  "id": 123
+}

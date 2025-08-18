@@ -1,1 +1,21 @@
-{ "jsonrpc": "2.0", "method": "tools/list", "id": "c4cec626-1", "params": {} }
+{
+  "jsonrpc": "2.0",
+  "method": "call",
+  "id": 8,
+  "params": {
+    "service": "object",
+    "method": "execute_kw",
+    "args": [
+      "ridealong",
+      "2",
+      "ODOO@jik008",
+      "res.partner",
+      "search_read",
+      [[["is_company", "=", true]]],
+      {
+        "fields": ["name", "country_id", "comment"],
+        "limit": 5
+      }
+    ]
+  }
+}

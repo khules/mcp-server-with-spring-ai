@@ -7,6 +7,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portal.mcp_server.service.search.FindSlotTypeService;
 
 @Configuration
 public class _Config {
@@ -62,6 +63,14 @@ public class _Config {
         createCategoryService.setOdooRpcService(odooRpcService());
         createCategoryService.setExpressionParser(expressionParser());
         return createCategoryService;
+    }
+
+    @Bean
+    FindSlotTypeService findSlotTypeService() {
+        FindSlotTypeService findSlotTypeService = new FindSlotTypeService();
+        findSlotTypeService.setOdooRpcService(odooRpcService());
+        findSlotTypeService.setExpressionParser(expressionParser());
+        return findSlotTypeService;
     }
 
     @Bean

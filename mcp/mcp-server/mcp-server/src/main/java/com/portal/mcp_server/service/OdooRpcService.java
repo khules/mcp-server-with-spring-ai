@@ -262,6 +262,58 @@ public class OdooRpcService {
                 .build();
     }
 
+    /**
+     * Performs a search_read on the given Odoo model using the JSON-RPC API.
+     * 
+     * @param model  The Odoo model name (e.g., "res.partner")
+     * @param domain The search domain (criteria)
+     * @param fields The fields to read
+     * @param limit  The max number of records to return
+     * @return The response from Odoo as a String (JSON array of records)
+     */
+    public String searchAndRead(String model, List<Object> domain, List<String> fields, int limit) {
+        // Arguments for search_read: [db, uid, password, model, 'search_read',
+        // [domain], {fields, limit}]
+        List<Object> args = Arrays.asList(
+                "ridealong", // db
+                "2", // uid
+                "ODOO@jik008", // password
+                model,
+                "search_read",
+                Arrays.asList(domain),
+                new java.util.HashMap<String, Object>() {
+                    {
+                        put("fields", fields);
+                        put("limit", limit);
+                    }
+                });
+
+        ExecuteParams params = ExecuteParams.builder()
+                .service("object")
+                .method("execute_kw")
+                .args(args)
+                .build();
+
+        JsonRpcRequest<ExecuteParams> request = JsonRpcRequest.<ExecuteParams>builder()
+                .jsonrpc("2.0")
+                .method("call")
+                .params(params)
+                .id(123)
+                .build();
+
+        try {
+            String requestJson = objectMapper.writeValueAsString(request);
+            LOGGER.info("Sending search_read request: {}", requestJson);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error serializing search_read request", e);
+        }
+        String url = "http://a35531458b52b46a2b9dd395c3497980-1396126055.us-east-1.elb.amazonaws.com:8059/jsonrpc";
+        String response = restTemplate.postForObject(url, request,
+                String.class);
+        LOGGER.info("Response from Odoo: {}", response);
+        return response;
+    }
+
     @Autowired
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

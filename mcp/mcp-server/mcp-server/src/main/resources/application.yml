@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5532/mydatabase
-    username: myuser
-    password: Auto@123
+    url: jdbc:postgresql://localhost:5432/001
+    username: odoo
+    password: odoo
     driver-class-name: org.postgresql.Driver
 
   jpa:

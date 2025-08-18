@@ -4,7 +4,7 @@
   "params": {
     "service": "object",
     "method": "execute",
-    "args": ["ridealong", "2", "ODOO@jik008", "appointement.type", "read", [8]]
+    "args": ["ridealong", "2", "ODOO@jik008", "appointement.type", "read", [9]]
   },
   "id": 123
 }

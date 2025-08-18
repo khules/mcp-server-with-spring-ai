@@ -1,1 +1,19 @@
-{"jsonrpc": "2.0", "id": 123, "result": [5]}
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": [
+    {
+      "id": 8,
+      "name": "Johannesburg>>>>Cape Town",
+      "appointees": [33],
+      "company_id": [1, "Ride Along"],
+      "origin": "Johannesburg",
+      "destination": "Cape Town",
+      "display_name": "Johannesburg>>>>Cape Town",
+      "create_uid": [2, "Administrator"],
+      "create_date": "2025-08-12 19:40:00",
+      "write_uid": [2, "Administrator"],
+      "write_date": "2025-08-12 19:40:00"
+    }
+  ]
+}
