@@ -1,0 +1,32 @@
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "27844988332",
+  "type": "interactive",
+  "interactive": {
+    "type": "button",
+    "header": {
+      "type": "image",
+      "image": {
+        "link": "http://a35531458b52b46a2b9dd395c3497980-1396126055.us-east-1.elb.amazonaws.com:8059/web/image/911-5ba7066d/ServiceAreas.png?access_token=bb506ac2-5749-4860-9167-ba8125c727d7"
+      }
+    },
+    "body": {
+      "text": "Enter the pickup location and destination from the available service areas."
+    },
+    "footer": {
+      "text": "Powered by IBiznis"
+    },
+    "action": {
+      "buttons": [
+        {
+          "type": "reply",
+          "reply": {
+            "id": "ServiceAreas-ack",
+            "title": "OK"
+          }
+        }
+      ]
+    }
+  }
+}

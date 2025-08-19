@@ -20,8 +20,6 @@ public class CreateSlotTypeService extends AbstractRpcService {
 
     @Override
     public void handleRequest(StandardEvaluationContext context) {
-
-        Expression numberOfPassengersExpression = expressionParser.parseExpression("tripDetails.numberOfPassengers");
         Expression userIdExpression = expressionParser.parseExpression("#user.id");
         Integer userId = userIdExpression.getValue(context, Integer.class);
 

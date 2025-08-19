@@ -1,15 +1,26 @@
 package com.portal.mcp_server.service;
 
+import java.io.IOException;
+import java.util.Collections;
+
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.portal.mcp_server.service.search.FindSlotTypeService;
 
-@Configuration
+@Configuration("mcpServerConfig")
 public class _Config {
 
     @Bean
@@ -66,14 +77,6 @@ public class _Config {
     }
 
     @Bean
-    FindSlotTypeService findSlotTypeService() {
-        FindSlotTypeService findSlotTypeService = new FindSlotTypeService();
-        findSlotTypeService.setOdooRpcService(odooRpcService());
-        findSlotTypeService.setExpressionParser(expressionParser());
-        return findSlotTypeService;
-    }
-
-    @Bean
     ExpressionParser expressionParser() {
         return new SpelExpressionParser();
     }
@@ -87,6 +90,14 @@ public class _Config {
 
     @Bean
     RestTemplate restTemplate() {
-        return new RestTemplate();
+        // You can customize the HttpClient here, for example, adding a connection pool
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setHttpClient(httpClient);
+
+        RestTemplate restTemplate = new RestTemplate(factory);
+        return restTemplate;
     }
+
 }

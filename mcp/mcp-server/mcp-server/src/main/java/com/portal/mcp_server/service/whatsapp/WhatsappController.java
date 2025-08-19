@@ -2,6 +2,8 @@ package com.portal.mcp_server.service.whatsapp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mbilashobane.ai.mcp_core.dto.whatsapp.InteractiveOptions;
+import com.mbilashobane.ai.mcp_core.dto.whatsapp.WebhookMessage;
+import com.portal.mcp_server.service.whatsapp.menu.MainMenu;
+
 @RestController
 @RequestMapping("/webhooks")
 public class WhatsappController {
     private static final Logger logger = LoggerFactory.getLogger(WhatsappController.class);
     // This token is a secret value that you set in your Meta App Dashboard
     private static final String VERIFY_TOKEN = "luckysleven";
+    private MainMenu mainMenu;
+    private WhatsappMessageSender whatsappMessageSender;
+    private final ObjectMapper objectMapper;
+
+    public WhatsappController(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     /**
      * Handles the GET request for webhook verification.
@@ -52,7 +67,30 @@ public class WhatsappController {
     @PostMapping
     public ResponseEntity<String> handleWebhookEvent(@RequestBody String payload) {
         logger.info("Received webhook event: {}", payload);
-        // Process the webhook event payload
+        WebhookMessage webhookMessage;
+        try {
+            webhookMessage = objectMapper.readValue(payload, WebhookMessage.class);
+
+            StandardEvaluationContext context = new StandardEvaluationContext();
+            context.setVariable("webhookMessage", webhookMessage);
+            InteractiveOptions options = mainMenu.listOptions(context);
+            String interactiveOptionsJson = objectMapper.writeValueAsString(options);
+            logger.info("Generated interactive options: {}", interactiveOptionsJson);
+            whatsappMessageSender.sendMessage(interactiveOptionsJson);
+        } catch (JsonProcessingException e) {
+            logger.error("Error processing webhook payload", e);
+            return ResponseEntity.badRequest().body("Invalid payload");
+        }
         return ResponseEntity.ok("Webhook event received");
+    }
+
+    @Autowired
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+    }
+
+    @Autowired
+    public void setWhatsappMessageSender(WhatsappMessageSender whatsappMessageSender) {
+        this.whatsappMessageSender = whatsappMessageSender;
     }
 }

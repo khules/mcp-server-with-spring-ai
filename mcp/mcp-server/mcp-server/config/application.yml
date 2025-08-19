@@ -22,8 +22,7 @@ spring:
         name: account-mcp-server
         version: 1.0.0
         type: SYNC
-        stdio:
-          enabled: false
+        stdio: false
         sse-message-endpoint: /mcp/message
 
 logging.level.org.springframework.ai: DEBUG

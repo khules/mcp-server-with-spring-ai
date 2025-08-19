@@ -1,7 +1,6 @@
 package com.portal.mcp_server.service.search;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,6 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mbilashobane.ai.mcp_core.dto.Slot;
 import com.mbilashobane.ai.mcp_core.dto.search.Rides;
 import com.portal.mcp_server.service.OdooRpcService;
 

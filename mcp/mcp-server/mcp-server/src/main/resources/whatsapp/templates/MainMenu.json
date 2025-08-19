@@ -5,9 +5,16 @@
   "type": "interactive",
   "interactive": {
     "type": "list",
-    "header": { "type": "text", "text": "Choose Option" },
-    "body": { "text": "Select how we can assist you with our ride service." },
-    "footer": { "text": "Powered by IBiznis" },
+    "header": {
+      "type": "text",
+      "text": "Choose Option"
+    },
+    "body": {
+      "text": "Select how we can assist you with our ride service."
+    },
+    "footer": {
+      "text": "Powered by IBiznis"
+    },
     "action": {
       "button": "Select Option",
       "sections": [

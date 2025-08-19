@@ -1,21 +1,43 @@
 {
-  "jsonrpc": "2.0",
-  "method": "call",
-  "id": 8,
-  "params": {
-    "service": "object",
-    "method": "execute_kw",
-    "args": [
-      "ridealong",
-      "2",
-      "ODOO@jik008",
-      "res.partner",
-      "search_read",
-      [[["is_company", "=", true]]],
-      {
-        "fields": ["name", "country_id", "comment"],
-        "limit": 5
-      }
-    ]
-  }
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "2097075907445555",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556139545",
+              "phone_number_id": "700989099769999"
+            },
+            "contacts": [
+              { "profile": { "name": "Khules" }, "wa_id": "27844988332" }
+            ],
+            "messages": [
+              {
+                "context": {
+                  "from": "15556139545",
+                  "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgARGBI2NkQ0RDM3NUI3RUQzODk2NzEA"
+                },
+                "from": "27844988332",
+                "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgASGCAzRERDQzIwMDU5MDY5RUNGMjI2RjVGMzVBRDJGOUZFRQA=",
+                "timestamp": "1755107797",
+                "type": "interactive",
+                "interactive": {
+                  "type": "list_reply",
+                  "list_reply": {
+                    "id": "1",
+                    "title": "Website Design",
+                    "description": "Get a custom website tailored to your needs."
+                  }
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
 }

@@ -1,0 +1,34 @@
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "27844988332",
+  "type": "interactive",
+  "interactive": {
+    "type": "list",
+    "header": {
+      "type": "text",
+      "text": "Available DBN to CPT"
+    },
+    "body": {
+      "text": "Select a slot to book your appointment."
+    },
+    "footer": {
+      "text": "Powered by IBiznis"
+    },
+    "action": {
+      "button": "Book Slot",
+      "sections": [
+        {
+          "title": "Available DBN to CPT",
+          "rows": [
+            {
+              "id": "slot-13",
+              "title": "August 12 22:25:40",
+              "description": "August 12, 22:25:40 - 23:25:40"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
