@@ -14,7 +14,7 @@ spec:
       containers:
         - name: mcp-server
           # IMPORTANT: Replace with your actual image path from your container registry.
-          image: khulesa/mcp-server:0.3.0
+          image: khulesa/mcp-server:0.3.1
           ports:
             - containerPort: 8060
           env:
