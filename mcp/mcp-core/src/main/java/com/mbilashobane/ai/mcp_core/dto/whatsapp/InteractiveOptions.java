@@ -1,6 +1,7 @@
 
 package com.mbilashobane.ai.mcp_core.dto.whatsapp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,12 +52,24 @@ public class InteractiveOptions {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Header {
         @JsonProperty("type")
         private String type;
 
         @JsonProperty("text")
         private String text;
+
+        @JsonProperty("image")
+        private Image image;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Image {
+        @JsonProperty("link")
+        private String link;
     }
 
     @Data
@@ -84,6 +97,31 @@ public class InteractiveOptions {
 
         @JsonProperty("sections")
         private Section[] sections;
+
+        @JsonProperty("buttons")
+        private Button[] buttons;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Button {
+        @JsonProperty("type")
+        private String type;
+
+        @JsonProperty("reply")
+        private Reply reply;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Reply {
+        @JsonProperty("id")
+        private String id;
+
+        @JsonProperty("title")
+        private String title;
     }
 
     @Data

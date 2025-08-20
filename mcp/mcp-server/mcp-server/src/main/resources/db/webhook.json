@@ -18,13 +18,20 @@
               {
                 "context": {
                   "from": "27745289946",
-                  "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgARGBI5QzYzRkNGMTZBOEFCQ0I1MTcA"
+                  "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgARGBJENDkzOERBNEQ0OEY2NEYwNTgA"
                 },
                 "from": "27844988332",
-                "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgASGCA1MTlENzcwOTRDRjA1NDQ1REM3OTE5OTBBNTQwRjJFMQA=",
-                "timestamp": "1755636498",
-                "text": { "body": "Ok" },
-                "type": "text"
+                "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgASGCAwOEYxMzYwNzcyNDg3ODU2MDlDNjA5QzREMjVFNEYwNgA=",
+                "timestamp": "1755640009",
+                "type": "interactive",
+                "interactive": {
+                  "type": "list_reply",
+                  "list_reply": {
+                    "id": "Menu-Find-A-Ride-1",
+                    "title": "Find a Ride",
+                    "description": "Select a ride from the available options."
+                  }
+                }
               }
             ]
           },

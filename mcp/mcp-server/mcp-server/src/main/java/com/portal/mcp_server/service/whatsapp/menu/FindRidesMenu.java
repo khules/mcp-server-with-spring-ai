@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -20,9 +21,11 @@ import com.mbilashobane.ai.mcp_core.dto.Slot;
 import com.mbilashobane.ai.mcp_core.dto.search.Rides;
 import com.mbilashobane.ai.mcp_core.dto.whatsapp.Interaction;
 import com.mbilashobane.ai.mcp_core.dto.whatsapp.InteractiveOptions;
+import com.mbilashobane.ai.mcp_core.dto.whatsapp.InteractiveResponse;
 import com.mbilashobane.ai.mcp_core.dto.whatsapp.WebhookMessage;
 import com.mbilashobane.ai.mcp_core.dto.whatsapp.InteractiveOptions.Row;
 import com.portal.mcp_server.service.OdooRpcService;
+import com.portal.mcp_server.service.chat.ChatClient;
 import com.portal.mcp_server.service.search.FindSlotTypeService;
 
 import org.springframework.expression.Expression;
@@ -31,6 +34,7 @@ import org.springframework.expression.ExpressionParser;
 public class FindRidesMenu extends WhatsappMenu {
     private static final Logger logger = LoggerFactory.getLogger(FindRidesMenu.class);
     private final FindSlotTypeService findSlotTypeService;
+    private ChatClient chatClient;
 
     public FindRidesMenu(ExpressionParser expressionParser, FindSlotTypeService findSlotTypeService) {
         super(expressionParser);
@@ -38,20 +42,44 @@ public class FindRidesMenu extends WhatsappMenu {
     }
 
     public InteractiveOptions listOptions(StandardEvaluationContext context) {
-        Expression webhookMessageExpression = expressionParser.parseExpression("#webhook.message");
-        WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
 
         Expression contactExpression = expressionParser.parseExpression("#contact");
         String contact = contactExpression.getValue(context, String.class);
-        if (!optionsMap.containsKey(contact)) {
+        if (!optionsMap.containsKey(contact) || optionsMap.get(contact) == null || optionsMap.get(contact).isEmpty()) {
             return serviceAreas(contact);
         }
-        return availableRides(context);
+        extractReply(context);
+        Expression replyExpression = expressionParser.parseExpression("#responseReply");
+        String reply = replyExpression.getValue(context, String.class);
+        Expression replyIdExpression = expressionParser.parseExpression("#responseReplyId");
+        String replyId = replyIdExpression.getValue(context, String.class);
+        if (replyId == null || replyId.isEmpty()) {
+            return serviceAreas(contact);
+        }
+
+        int idx = optionsMap.get(contact).size() - 1;
+        Interaction interaction = optionsMap.get(contact).get(idx);
+        InteractiveResponse interactiveResponse = interaction.getInteractiveResponse();
+        if (interactiveResponse == null || interactiveResponse.getResponse() == null) {
+            if (replyId.equals("ServiceAreas-ack")) {
+                interaction.setInteractiveResponse(
+                        InteractiveResponse.builder().response(reply).build());
+                return null;
+            } else {
+                Rides rides = chatClient.findRides(reply);
+                logger.info("Found rides: {}", rides);
+                if (rides != null && rides.getOrigin() != null && rides.getDestination() != null) {
+                    context.setVariable("rides", rides);
+                    return availableRides(context);
+                }
+            }
+        }
+        return serviceAreas(contact);
     }
 
     private InteractiveOptions serviceAreas(String contact) {
         try {
-            ClassPathResource resource = new ClassPathResource("whatsapp/templates/ServiceAreas.json");
+            ClassPathResource resource = new ClassPathResource("whatsapp/templates/ServiceAreaMenu.json");
             InputStream inputStream = resource.getInputStream();
             InteractiveOptions interactiveOptions = mapper.readValue(inputStream, InteractiveOptions.class);
 
@@ -102,6 +130,11 @@ public class FindRidesMenu extends WhatsappMenu {
         }
     }
 
+    @Autowired
+    public void setChatClient(ChatClient chatClient) {
+        this.chatClient = chatClient;
+    }
+
     public static void main(String[] args) {
         StandardEvaluationContext context = new StandardEvaluationContext();
         context.setVariable("rides", Rides.builder()
@@ -122,7 +155,14 @@ public class FindRidesMenu extends WhatsappMenu {
         try {
             String interactiveOptions = new ObjectMapper().writeValueAsString(options);
             logger.info("Interactive Options: {}", interactiveOptions);
-        } catch (JsonProcessingException e) {
+            ClassPathResource resource = new ClassPathResource("db/service_area_reply.json");
+            InputStream inputStream = resource.getInputStream();
+            WebhookMessage webhookMessage = new ObjectMapper().readValue(inputStream, WebhookMessage.class);
+            context.setVariable("webhookMessage", webhookMessage);
+            options = findRidesFlow.listOptions(context);
+            interactiveOptions = new ObjectMapper().writeValueAsString(options);
+            logger.info("Interactive Options: {}", interactiveOptions);
+        } catch (Exception e) {
             logger.error("Error processing JSON", e);
         }
     }

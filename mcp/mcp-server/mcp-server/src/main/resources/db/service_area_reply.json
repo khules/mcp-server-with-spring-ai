@@ -16,14 +16,10 @@
             ],
             "messages": [
               {
-                "context": {
-                  "from": "27745289946",
-                  "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgARGBI5QzYzRkNGMTZBOEFCQ0I1MTcA"
-                },
                 "from": "27844988332",
-                "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgASGCA1MTlENzcwOTRDRjA1NDQ1REM3OTE5OTBBNTQwRjJFMQA=",
-                "timestamp": "1755636498",
-                "text": { "body": "Ok" },
+                "id": "wamid.HBgLMjc4NDQ5ODgzMzIVAgASGCBBMTk0NjBGQTUwQUM4MTNENTZDQzM1QzZCQjJENjdCOQA=",
+                "timestamp": "1755712970",
+                "text": { "body": "Durban to Cape Town" },
                 "type": "text"
               }
             ]

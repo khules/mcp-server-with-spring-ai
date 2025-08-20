@@ -1,5 +1,8 @@
 package com.mbilashobane.ai.mcp_core.dto.whatsapp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WebhookMessage {
     private String object;
     private List<Entry> entry;
@@ -21,6 +25,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Entry {
         private String id;
         private List<Change> changes;
@@ -30,6 +35,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Change {
         private Value value;
         private String field;
@@ -39,6 +45,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Value {
         @JsonProperty("messaging_product")
         private String messagingProduct;
@@ -51,6 +58,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Metadata {
         @JsonProperty("display_phone_number")
         private String displayPhoneNumber;
@@ -62,6 +70,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Contact {
         private Profile profile;
         @JsonProperty("wa_id")
@@ -72,6 +81,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Profile {
         private String name;
     }
@@ -80,19 +90,24 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Message {
         private Context context;
         private String from;
         private String id;
         private String timestamp;
         private String type;
+
         private Interactive interactive;
+        private Text text;
     }
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Context {
         private String from;
         private String id;
@@ -102,6 +117,7 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Interactive {
         private String type;
         @JsonProperty("list_reply")
@@ -112,9 +128,19 @@ public class WebhookMessage {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ListReply {
         private String id;
         private String title;
         private String description;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Text {
+        private String body;
     }
 }

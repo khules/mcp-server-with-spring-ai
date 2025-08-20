@@ -73,5 +73,6 @@ data:
     logging.level.org.springframework.ai: TRACE
     logging.level.org.hibernate.SQL: DEBUG
     logging.level.org.hibernate.orm.jdbc.bind: TRACE
-    logging.level.org.zalando.logbook: TRACE
+    logging.level.org.zalando.logbook: WARN
+    logging.level.com.zaxxer.hikari: WARN
     server.port: 8060

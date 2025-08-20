@@ -2,6 +2,7 @@ package com.portal.mcp_server.service.whatsapp.menu;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class MainMenu extends WhatsappMenu {
         if (findRidesMenu.hasBeenSelected(contact)) {
             return findRidesMenu.listOptions(context);
         } else {
+            extractSelectedOption(context);
             Expression mainMenuOptionExpression = expressionParser.parseExpression("#mainMenuOption");
             String mainMenuOption = mainMenuOptionExpression.getValue(context, String.class);
             if (mainMenuOption == null || mainMenuOption.isEmpty()) {
@@ -60,7 +62,15 @@ public class MainMenu extends WhatsappMenu {
 
         Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");
         WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
-        String contact = webhookMessage.getEntry().get(0).getChanges().get(0).getValue().getMessages().get(0).getFrom();
+        if (webhookMessage == null) {
+            return;
+        }
+        List<WebhookMessage.Message> messages = webhookMessage.getEntry().get(0).getChanges().get(0).getValue()
+                .getMessages();
+        if (messages != null && messages.isEmpty()) {
+            return;
+        }
+        String contact = messages.get(0).getFrom();
         context.setVariable("contact", contact);
     }
 
@@ -89,7 +99,7 @@ public class MainMenu extends WhatsappMenu {
                 .slotIds(new CopyOnWriteArrayList<>())
                 .slots(new CopyOnWriteArrayList<>())
                 .build());
-        context.setVariable("contact", "27844988332");
+        // context.setVariable("contact", "27844988332");
         OdooRpcService odooRpcService = new OdooRpcService(new ObjectMapper());
         odooRpcService.setRestTemplate(new RestTemplate());
         FindSlotTypeService findSlotTypeService = new FindSlotTypeService();
@@ -105,12 +115,15 @@ public class MainMenu extends WhatsappMenu {
         try {
             String interactiveOptions = new ObjectMapper().writeValueAsString(options);
             logger.info("Interactive Options: {}", interactiveOptions);
-        } catch (JsonProcessingException e) {
+
+            ClassPathResource resource = new ClassPathResource("db/webhook.json");
+            InputStream inputStream = resource.getInputStream();
+            WebhookMessage webhookMessage = new ObjectMapper().readValue(inputStream, WebhookMessage.class);
+            context.setVariable("webhookMessage", webhookMessage);
+            options = mainMenu.listOptions(context);
+        } catch (Exception e) {
             logger.error("Error processing JSON", e);
         }
-        context.setVariable("mainMenuOption", "Menu-Find-A-Ride-1");
-        mainMenu.listOptions(context);
-
         try {
             String interactiveOptions = new ObjectMapper().writeValueAsString(options);
             logger.info("Interactive Options: {}", interactiveOptions);

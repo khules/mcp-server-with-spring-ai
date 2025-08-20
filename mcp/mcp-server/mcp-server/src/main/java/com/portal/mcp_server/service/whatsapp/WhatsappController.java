@@ -70,13 +70,18 @@ public class WhatsappController {
         WebhookMessage webhookMessage;
         try {
             webhookMessage = objectMapper.readValue(payload, WebhookMessage.class);
+            if (webhookMessage.getEntry().get(0).getChanges().get(0).getValue().getMessages() != null) {
+                StandardEvaluationContext context = new StandardEvaluationContext();
+                context.setVariable("webhookMessage", webhookMessage);
+                InteractiveOptions options = mainMenu.listOptions(context);
+                if (options == null) {
 
-            StandardEvaluationContext context = new StandardEvaluationContext();
-            context.setVariable("webhookMessage", webhookMessage);
-            InteractiveOptions options = mainMenu.listOptions(context);
-            String interactiveOptionsJson = objectMapper.writeValueAsString(options);
-            logger.info("Generated interactive options: {}", interactiveOptionsJson);
-            whatsappMessageSender.sendMessage(interactiveOptionsJson);
+                    return ResponseEntity.ok("Webhook event received");
+                }
+                String interactiveOptionsJson = objectMapper.writeValueAsString(options);
+                logger.info("Generated interactive options: {}", interactiveOptionsJson);
+                whatsappMessageSender.sendMessage(interactiveOptionsJson);
+            }
         } catch (JsonProcessingException e) {
             logger.error("Error processing webhook payload", e);
             return ResponseEntity.badRequest().body("Invalid payload");
