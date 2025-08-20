@@ -1,5 +1,7 @@
 package com.portal.mcp_server.tools;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
@@ -23,6 +25,9 @@ public class FindRidesTool implements McpTool {
             Rides rides = Rides.builder()
                     .origin(origin)
                     .destination(destination)
+                    .appointees(new ArrayList<>())
+                    .slotIds(new ArrayList<>())
+                    .slots(new ArrayList<>())
                     .build();
             String rideResponse = objectMapper.writeValueAsString(rides);
             logger.info("Finding rides from {} to {}", origin, destination);
