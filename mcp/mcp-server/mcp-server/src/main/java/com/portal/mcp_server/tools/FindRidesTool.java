@@ -10,24 +10,22 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mbilashobane.ai.mcp_core.dto.search.Rides;
+import com.portal.mcp_server.dto.RideSearch;
 
 @Service
 public class FindRidesTool implements McpTool {
     private static final Logger logger = LoggerFactory.getLogger(FindRidesTool.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Tool(name = "findRides", description = "Find available rides based on (origin, from , pickup location) and (destination, to.")
-    public Rides findRides(
+    @Tool(name = "validateRideInformation", description = "Validates the origin and destination and returns a valid ride search criteria that can be consumed by a REST endpoint.")
+    public RideSearch validateRideInformation(
             @ToolParam(description = "The starting location of the ride.") String origin,
             @ToolParam(description = "The final destination of the ride.") String destination) {
         try {
 
-            Rides rides = Rides.builder()
+            RideSearch rides = RideSearch.builder()
                     .origin(origin)
                     .destination(destination)
-                    .appointees(new ArrayList<>())
-                    .slotIds(new ArrayList<>())
-                    .slots(new ArrayList<>())
                     .build();
             String rideResponse = objectMapper.writeValueAsString(rides);
             logger.info("Finding rides from {} to {}:  {}", origin, destination, rideResponse);
