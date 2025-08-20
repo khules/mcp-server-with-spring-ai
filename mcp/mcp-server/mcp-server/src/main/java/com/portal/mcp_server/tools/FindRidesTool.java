@@ -17,7 +17,7 @@ public class FindRidesTool implements McpTool {
     private static final Logger logger = LoggerFactory.getLogger(FindRidesTool.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Tool(name = "validateRideInformation", description = "Validates the origin and destination and returns a valid ride search criteria that can be consumed by a REST endpoint.")
+    @Tool(name = "validateRideInformation", description = "returns a valid json ride search criteria that contains origin and destination.")
     public RideSearch validateRideInformation(
             @ToolParam(description = "The starting location of the ride.") String origin,
             @ToolParam(description = "The final destination of the ride.") String destination) {
