@@ -30,7 +30,9 @@ public class RidesController {
      */
     @PostMapping("/search")
     public ResponseEntity<Rides> findRides(@RequestBody RideSearch request) {
-        Rides rides = findRidesTool.findRides(request.getOrigin(), request.getDestination());
-        return ResponseEntity.ok(rides);
+        // Rides rides = findRidesTool.findRides(request.getOrigin(),
+        // request.getDestination());
+        // return ResponseEntity.ok(rides);
+        return null;
     }
 }
