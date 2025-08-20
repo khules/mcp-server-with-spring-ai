@@ -17,7 +17,7 @@ public class FindRidesTool implements McpTool {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Tool(name = "findRides", description = "Find available rides based on (origin, from , pickup location) and (destination, to.")
-    public String findRides(
+    public Rides findRides(
             @ToolParam(description = "The starting location of the ride.") String origin,
             @ToolParam(description = "The final destination of the ride.") String destination) {
         try {
@@ -30,11 +30,11 @@ public class FindRidesTool implements McpTool {
                     .slots(new ArrayList<>())
                     .build();
             String rideResponse = objectMapper.writeValueAsString(rides);
-            logger.info("Finding rides from {} to {}", origin, destination);
-            return rideResponse;
+            logger.info("Finding rides from {} to {}:  {}", origin, destination, rideResponse);
+            return rides;
         } catch (Exception e) {
             logger.error("Error processing JSON", e);
-            return "Error processing request";
+            return new Rides();
         }
     }
 }
