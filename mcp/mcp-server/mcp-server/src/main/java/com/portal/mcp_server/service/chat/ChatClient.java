@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mbilashobane.ai.mcp_core.dto.search.Rides;
 
 public class ChatClient {
@@ -14,7 +15,10 @@ public class ChatClient {
         String url = String.format("http://mcp-client-service:8040/account?q=%s %s", chatMessage,
                 "return results from tool as json returned by the tool");
         try {
-            return restTemplate.getForObject(url, Rides.class);
+            String response = restTemplate.getForObject(url, String.class);
+            logger.info("Response from API: {}", response);
+            // Parse the JSON response into a Rides object
+            return new ObjectMapper().readValue(response, Rides.class);
         } catch (Exception e) {
             logger.error("Error fetching rides from API", e);
             return new Rides();
