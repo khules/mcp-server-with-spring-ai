@@ -12,8 +12,9 @@ public class ChatClient {
     private RestTemplate restTemplate;
 
     public Rides findRides(String chatMessage) {
-        String url = String.format("http://mcp-client-service:8040/account?q=%s %s", chatMessage,
-                "return results from tool as json returned by the tool");
+        String url = String.format("http://mcp-client-service:8040/account?q=%s '%s' %s",
+                "validate that the formation ", chatMessage,
+                "has an origin and destination, and return result that can be consumed by rest endpoint");
         try {
             String response = restTemplate.getForObject(url, String.class);
             logger.info("Response from API: {}", response);
