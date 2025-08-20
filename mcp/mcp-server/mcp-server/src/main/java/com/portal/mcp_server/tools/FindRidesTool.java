@@ -32,7 +32,7 @@ public class FindRidesTool implements McpTool {
             return rides;
         } catch (Exception e) {
             logger.error("Error processing JSON", e);
-            return new Rides();
+            return new RideSearch(); // Return an empty RideSearch object in case of error
         }
     }
 }
