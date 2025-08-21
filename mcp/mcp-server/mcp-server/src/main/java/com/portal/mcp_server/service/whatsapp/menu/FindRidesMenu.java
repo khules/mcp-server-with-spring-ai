@@ -100,7 +100,7 @@ public class FindRidesMenu extends WhatsappMenu {
             InteractiveOptions options = mapper.readValue(inputStream, InteractiveOptions.class);
             Expression expression = expressionParser.parseExpression("#contact");
             String contact = expression.getValue(context, String.class);
-            if (!optionsMap.containsKey(contact)) {
+            if (optionsMap.containsKey(contact)) {
                 findSlotTypeService.handleRequest(context);
                 Expression ridesExpression = expressionParser.parseExpression("#rides");
                 Rides rides = ridesExpression.getValue(context, Rides.class);
