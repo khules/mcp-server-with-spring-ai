@@ -27,6 +27,7 @@ import com.mbilashobane.ai.mcp_core.dto.whatsapp.InteractiveOptions.Row;
 import com.portal.mcp_server.service.OdooRpcService;
 import com.portal.mcp_server.service.chat.ChatClient;
 import com.portal.mcp_server.service.search.FindSlotTypeService;
+import com.portal.mcp_server.tools.FindRidesTool;
 
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -66,7 +67,7 @@ public class FindRidesMenu extends WhatsappMenu {
                         InteractiveResponse.builder().response(reply).build());
                 return null;
             } else {
-                Rides rides = chatClient.findRides(reply);
+                Rides rides = chatClient.findRides(reply, contact);
                 logger.info("Found rides: {}", rides);
                 if (rides != null && rides.getOrigin() != null && rides.getDestination() != null) {
                     context.setVariable("rides", rides);
