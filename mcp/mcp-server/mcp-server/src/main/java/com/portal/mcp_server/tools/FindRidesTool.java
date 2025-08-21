@@ -20,7 +20,7 @@ public class FindRidesTool implements McpTool {
     private final Map<String, Rides> ridesMap = new HashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Tool(name = "validateRideInformation", description = "confirms that ride information is valid that the ride search criteria that contains origin and destination are valid for the contact number.")
+    @Tool(name = "validateRideInformation", description = "confirms that ride information is valid that the ride search criteria   contains origin and destination are valid for the contact number.")
     public String validateRideInformation(
             @ToolParam(description = "The starting location of the ride.") String origin,
             @ToolParam(description = "The final destination of the ride.") String destination,
@@ -30,7 +30,9 @@ public class FindRidesTool implements McpTool {
             Rides rides = Rides.builder()
                     .origin(origin)
                     .destination(destination)
-
+                    .appointees(new ArrayList<>())
+                    .slotIds(new ArrayList<>())
+                    .slots(new ArrayList<>())
                     .build();
             String rideResponse = objectMapper.writeValueAsString(rides);
             logger.info("Finding rides from {} to {}:  {}", origin, destination, rideResponse);
