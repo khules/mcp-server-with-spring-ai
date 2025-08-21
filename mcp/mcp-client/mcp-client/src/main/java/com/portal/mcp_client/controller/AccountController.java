@@ -10,15 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountController {
 
-    private final ChatClient chatClient;
+    private ChatClient chatClient;
+    private final ToolCallbackProvider toolCallbackProvider;
+    private final ChatClient.Builder chatBuilder;
 
-    public AccountController(ChatClient.Builder chat, ToolCallbackProvider toolCallbackProvider) {
-        this.chatClient = chat.defaultToolCallbacks(toolCallbackProvider)
-                .build();
+    public AccountController(ChatClient.Builder chatBuilder, ToolCallbackProvider toolCallbackProvider) {
+        this.chatBuilder = chatBuilder;
+        this.chatClient = null;
+        this.toolCallbackProvider = toolCallbackProvider;
     }
 
     @GetMapping("/account")
     public String getAccount(@RequestParam("q") String name) {
+        this.chatClient = chatBuilder.defaultToolCallbacks(toolCallbackProvider)
+                .build();
         PromptTemplate pt = new PromptTemplate(name);
         return this.chatClient.prompt(pt.create())
                 .call()

@@ -9,7 +9,7 @@ namespace: icu-erp
 images:
   - name: mcp-client
     newName: khulesa/mcp-client
-    newTag: 0.0.9
+    newTag: 0.1.0
   # - name: your-registry/mcp-server
   #   newName: khulesa/mcp-server # <-- Replace with your actual image
   # - name: your-registry/mcp-ollama-phi3

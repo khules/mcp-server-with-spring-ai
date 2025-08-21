@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: mcp-client:0.0.9
+    image: khulesa/mcp-client:0.1.0
     container_name: mcp_client_app
     ports:
       - "8040:8040"
