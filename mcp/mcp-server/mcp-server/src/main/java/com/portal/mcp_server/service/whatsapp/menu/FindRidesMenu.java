@@ -67,7 +67,7 @@ public class FindRidesMenu extends WhatsappMenu {
                         InteractiveResponse.builder().response(reply).build());
                 return null;
             } else {
-                Rides rides = chatClient.findRides(reply, contact);
+                Rides rides = chatClient.findRides(reply, context);
                 logger.info("Found rides: {}", rides);
                 if (rides != null && rides.getOrigin() != null && rides.getDestination() != null) {
                     context.setVariable("rides", rides);
@@ -78,15 +78,22 @@ public class FindRidesMenu extends WhatsappMenu {
         return serviceAreas(contact);
     }
 
-    private InteractiveOptions serviceAreas(String contact) {
+    private InteractiveOptions serviceAreas(String context) {
         try {
+            Expression contactExpression = expressionParser.parseExpression("#contact");
+            String contact = contactExpression.getValue(context, String.class);
             ClassPathResource resource = new ClassPathResource("whatsapp/templates/ServiceAreaMenu.json");
             InputStream inputStream = resource.getInputStream();
             InteractiveOptions interactiveOptions = mapper.readValue(inputStream, InteractiveOptions.class);
-
+            Expression toolReplyExpression = expressionParser.parseExpression("#toolReply");
+            String toolReply = toolReplyExpression.getValue(context, String.class);
+            String text = toolReply != null && !toolReply.isEmpty()
+                    ? toolReply
+                    : interactiveOptions.getInteractive().getBody().getText();
             optionsMap.put(contact,
                     new CopyOnWriteArrayList<>(
                             List.of(Interaction.builder().interactiveOptions(interactiveOptions).build())));
+            interactiveOptions.getInteractive().getBody().setText(text);
             return interactiveOptions;
         } catch (Exception e) {
             throw new RuntimeException("Failed to load ServiceAreas.json", e);
@@ -130,6 +137,7 @@ public class FindRidesMenu extends WhatsappMenu {
             throw new RuntimeException("Failed to load SlotsOptionsMessage.json", e);
         }
     }
+    // private InteractiveOptions
 
     @Autowired
     public void setChatClient(ChatClient chatClient) {

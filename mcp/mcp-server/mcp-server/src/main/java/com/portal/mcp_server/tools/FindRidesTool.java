@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mbilashobane.ai.mcp_core.dto.search.Rides;
-import com.portal.mcp_server.dto.RideSearch;
 
 @Service
 public class FindRidesTool implements McpTool {
@@ -37,10 +36,11 @@ public class FindRidesTool implements McpTool {
             String rideResponse = objectMapper.writeValueAsString(rides);
             logger.info("Finding rides from {} to {}:  {}", origin, destination, rideResponse);
             ridesMap.put(contactNumber, rides);
-            return "Ride information is valid";
+            return "Ride information is valid and has been stored successfully. You can now proceed to find rides.";
         } catch (Exception e) {
             logger.error("Error processing JSON", e);
-            return "Ride information is invalid"; // Return an empty string in case of error
+            return "Ride information is invalid we could not process your request."; // Return an empty string in case
+                                                                                     // of error
         }
     }
 

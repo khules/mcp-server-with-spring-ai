@@ -78,6 +78,9 @@ public class WhatsappController {
 
                     return ResponseEntity.ok("Webhook event received");
                 }
+                String typingResponseMessage = objectMapper
+                        .writeValueAsString(mainMenu.generateTypingResponse(context));
+                whatsappMessageSender.sendMessage(typingResponseMessage);
                 String interactiveOptionsJson = objectMapper.writeValueAsString(options);
                 logger.info("Generated interactive options: {}", interactiveOptionsJson);
                 whatsappMessageSender.sendMessage(interactiveOptionsJson);
@@ -98,4 +101,5 @@ public class WhatsappController {
     public void setWhatsappMessageSender(WhatsappMessageSender whatsappMessageSender) {
         this.whatsappMessageSender = whatsappMessageSender;
     }
+
 }

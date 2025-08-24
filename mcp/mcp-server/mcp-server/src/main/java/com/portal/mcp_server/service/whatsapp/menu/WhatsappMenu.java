@@ -1,10 +1,13 @@
 package com.portal.mcp_server.service.whatsapp.menu;
 
+import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -69,6 +72,20 @@ public abstract class WhatsappMenu {
                 : messages.get(0).getId();
         context.setVariable("responseReply", reply);
         context.setVariable("responseReplyId", replyId);
+    }
+
+    public InteractiveOptions generateTypingResponse(StandardEvaluationContext context) {
+        try (var inputStream = getClass().getResourceAsStream("/whatsapp/templates/TypingIndicatorResponse.json")) {
+            Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");
+            WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
+            String messageId = webhookMessage.getEntry().get(0).getChanges().get(0).getValue().getMessages().get(0)
+                    .getId();
+            InteractiveOptions interactiveOptions = mapper.readValue(inputStream, InteractiveOptions.class);
+            interactiveOptions.setMessageId(messageId);
+            return interactiveOptions;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load TypingIndicatorResponse.json", e);
+        }
     }
 
     public abstract InteractiveOptions listOptions(StandardEvaluationContext context);

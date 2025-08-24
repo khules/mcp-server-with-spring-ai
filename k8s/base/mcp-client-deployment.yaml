@@ -21,6 +21,22 @@ spec:
               value: "client"
             - name: SPRING_CONFIG_LOCATION
               value: "file:/config/application.yml"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /sse
+              port: 8060
+              host: 10.100.131.6
+            initialDelaySeconds: 15
+            periodSeconds: 3
+            timeoutSeconds: 5
+            failureThreshold: 1
           volumeMounts:
             - name: config-volume
               mountPath: /config

@@ -17,6 +17,15 @@ public class InteractiveOptions {
     @JsonProperty("messaging_product")
     private String messagingProduct;
 
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("message_id")
+    private String messageId;
+
+    @JsonProperty("typing_indicator")
+    private TypingIndicator typingIndicator;
+
     @JsonProperty("recipient_type")
     private String recipientType;
 
@@ -30,6 +39,15 @@ public class InteractiveOptions {
     private Interactive interactive;
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TypingIndicator {
+        @JsonProperty("type")
+        private String type;
+    }
+
+    @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Interactive {
