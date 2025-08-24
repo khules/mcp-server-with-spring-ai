@@ -127,6 +127,9 @@ public class MainMenu extends WhatsappMenu {
         try {
             String interactiveOptions = new ObjectMapper().writeValueAsString(options);
             logger.info("Interactive Options: {}", interactiveOptions);
+            options = mainMenu.generateTypingResponse(context);
+            interactiveOptions = new ObjectMapper().writeValueAsString(options);
+            logger.info("Interactive Options: {}", interactiveOptions);
         } catch (JsonProcessingException e) {
             logger.error("Error processing JSON", e);
         }
