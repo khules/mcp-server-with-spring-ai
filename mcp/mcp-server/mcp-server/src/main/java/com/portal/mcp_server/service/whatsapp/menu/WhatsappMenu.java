@@ -74,6 +74,22 @@ public abstract class WhatsappMenu {
         context.setVariable("responseReplyId", replyId);
     }
 
+    protected void extractContact(StandardEvaluationContext context) {
+
+        Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");
+        WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
+        if (webhookMessage == null) {
+            return;
+        }
+        List<WebhookMessage.Message> messages = webhookMessage.getEntry().get(0).getChanges().get(0).getValue()
+                .getMessages();
+        if (messages != null && messages.isEmpty()) {
+            return;
+        }
+        String contact = messages.get(0).getFrom();
+        context.setVariable("contact", contact);
+    }
+
     public InteractiveOptions generateTypingResponse(StandardEvaluationContext context) {
         try (var inputStream = getClass().getResourceAsStream("/whatsapp/templates/TypingIndicator.json")) {
             Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");

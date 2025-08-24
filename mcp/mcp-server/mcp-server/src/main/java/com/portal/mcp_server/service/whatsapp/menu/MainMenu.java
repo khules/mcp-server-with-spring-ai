@@ -58,22 +58,6 @@ public class MainMenu extends WhatsappMenu {
         }
     }
 
-    private void extractContact(StandardEvaluationContext context) {
-
-        Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");
-        WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
-        if (webhookMessage == null) {
-            return;
-        }
-        List<WebhookMessage.Message> messages = webhookMessage.getEntry().get(0).getChanges().get(0).getValue()
-                .getMessages();
-        if (messages != null && messages.isEmpty()) {
-            return;
-        }
-        String contact = messages.get(0).getFrom();
-        context.setVariable("contact", contact);
-    }
-
     private InteractiveOptions loadMainMenuTemplate() {
         try {
             ClassPathResource resource = new ClassPathResource("whatsapp/templates/MainMenu.json");

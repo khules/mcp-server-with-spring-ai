@@ -43,11 +43,11 @@ public class FindRidesMenu extends WhatsappMenu {
     }
 
     public InteractiveOptions listOptions(StandardEvaluationContext context) {
-
+        extractContact(context);
         Expression contactExpression = expressionParser.parseExpression("#contact");
         String contact = contactExpression.getValue(context, String.class);
         if (!optionsMap.containsKey(contact) || optionsMap.get(contact) == null || optionsMap.get(contact).isEmpty()) {
-            return serviceAreas(contact);
+            return serviceAreas(context);
         }
         extractReply(context);
         Expression replyExpression = expressionParser.parseExpression("#responseReply");
@@ -55,7 +55,7 @@ public class FindRidesMenu extends WhatsappMenu {
         Expression replyIdExpression = expressionParser.parseExpression("#responseReplyId");
         String replyId = replyIdExpression.getValue(context, String.class);
         if (replyId == null || replyId.isEmpty()) {
-            return serviceAreas(contact);
+            return serviceAreas(context);
         }
 
         int idx = optionsMap.get(contact).size() - 1;
@@ -75,10 +75,10 @@ public class FindRidesMenu extends WhatsappMenu {
                 }
             }
         }
-        return serviceAreas(contact);
+        return serviceAreas(context);
     }
 
-    private InteractiveOptions serviceAreas(String context) {
+    private InteractiveOptions serviceAreas(StandardEvaluationContext context) {
         try {
             Expression contactExpression = expressionParser.parseExpression("#contact");
             String contact = contactExpression.getValue(context, String.class);
@@ -159,7 +159,13 @@ public class FindRidesMenu extends WhatsappMenu {
         FindSlotTypeService findSlotTypeService = new FindSlotTypeService();
         findSlotTypeService.setExpressionParser(new SpelExpressionParser());
         findSlotTypeService.setOdooRpcService(odooRpcService);
+
+        ChatClient clientChatService = new ChatClient();
+        clientChatService.setExpressionParser(new SpelExpressionParser());
+        clientChatService.setFindRidesTool(new FindRidesTool());
+        clientChatService.setRestTemplate(new RestTemplate());
         FindRidesMenu findRidesFlow = new FindRidesMenu(new SpelExpressionParser(), findSlotTypeService);
+        findRidesFlow.setChatClient(clientChatService);
         InteractiveOptions options = findRidesFlow.listOptions(context);
         try {
             String interactiveOptions = new ObjectMapper().writeValueAsString(options);
