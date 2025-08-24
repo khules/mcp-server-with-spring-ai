@@ -75,7 +75,7 @@ public abstract class WhatsappMenu {
     }
 
     public InteractiveOptions generateTypingResponse(StandardEvaluationContext context) {
-        try (var inputStream = getClass().getResourceAsStream("/whatsapp/templates/TypingIndicatorResponse.json")) {
+        try (var inputStream = getClass().getResourceAsStream("/whatsapp/templates/TypingIndicator.json")) {
             Expression webhookMessageExpression = expressionParser.parseExpression("#webhookMessage");
             WebhookMessage webhookMessage = webhookMessageExpression.getValue(context, WebhookMessage.class);
             String messageId = webhookMessage.getEntry().get(0).getChanges().get(0).getValue().getMessages().get(0)
